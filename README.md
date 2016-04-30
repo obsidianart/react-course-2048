@@ -5,6 +5,8 @@ Based on a boilerplate https://github.com/stylesuxx/generator-react-webpack-redu
 To start:
 - npm start
 
+Test and coverage:
+- npm test
 
 Steps
 - Step 1: Clone the boilerplate
@@ -13,3 +15,4 @@ Steps
 - Step 4: add Sass (change the require on top of app.js)
 - Step 5: add keyboard listeners
 - Step 6: move tiles to state and add the first movement concept
+- Step 7: time to write a test

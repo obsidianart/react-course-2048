@@ -26,7 +26,7 @@ class AppComponent extends React.Component {
   moveTilesRight(state) {
     return {
       tiles:state.tiles.map(tile =>
-        Object.assign({},tile,{y:tile.y+1})
+        Object.assign({},tile,{x:tile.x+1})
       )
     }
   }
