@@ -4,18 +4,29 @@ body {
   background: #222;
 }
 
-.index img {
-  margin: 40px auto;
-  border-radius: 4px;
-  background: #fff;
-  display: block;
+h1 {
+  text-align: center;
 }
 
-.index .notice {
-  margin: 20px auto;
-  padding: 15px 0;
-  text-align: center;
-  border: 1px solid #000;
-  border-width: 1px 0;
-  background: #666;
+#board {
+	width: 500px;
+	height: 500px;
+	padding:10px;
+	margin:0 auto;
+	background-color: #bbada0;
+	color:#776e65;
+}
+
+#board .tile {
+	width: 115px;
+	height: 115px;
+	line-height: 115px;
+	display: inline-block;
+	background-color: #eee4da;
+	text-align: center;
+	margin:5px;
+	border-radius: 3px;
+    font-size: 55px;
+    font-weight: bold;
+
 }
