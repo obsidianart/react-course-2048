@@ -12,3 +12,4 @@ Steps
 - Step 3: add tiles
 - Step 4: add Sass (change the require on top of app.js)
 - Step 5: add keyboard listeners
+- Step 6: move tiles to state and add the first movement concept

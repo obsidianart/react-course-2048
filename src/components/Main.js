@@ -13,10 +13,29 @@ const KEY_DIRECTIONS = {
 }
 
 class AppComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      tiles: [
+        {x:2, y:2, val:2, id:1},
+        {x:0, y:0, val:4, id:2}
+      ]
+    }
+  }
+
+  moveTilesRight(state) {
+    return {
+      tiles:state.tiles.map(tile =>
+        Object.assign({},tile,{y:tile.y+1})
+      )
+    }
+  }
+
   handleKeyDown(event) {
-    if (event.keyCode >= 37 && event.keyCode <= 40) {
+    if (event.keyCode in KEY_DIRECTIONS) {
       event.preventDefault()
-      console.log("direction", KEY_DIRECTIONS[event.keyCode])
+      this.setState(this.moveTilesRight)
+      //console.log("direction", KEY_DIRECTIONS[event.keyCode])
       //this.setState({board: this.state.board.move(direction)})
     }
   }
@@ -37,11 +56,6 @@ class AppComponent extends React.Component {
       [0,0,0,0]
     ]
 
-    let tiles = [
-      {x:2, y:2, val:2},
-      {x:0, y:0, val:4}
-    ]
-
     return (
       <main>
         <h1>2048</h1>
@@ -55,8 +69,8 @@ class AppComponent extends React.Component {
               )
             }
             {
-              tiles.map(tile=>
-                <div className={`tile tile-${tile.val}`} key={`tile${tile.x}${tile.y}`} style={{top:tile.x*125, left:tile.y*125}}>{tile.val}</div>
+              this.state.tiles.map(tile=>
+                <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.x*125, left:tile.y*125}}>{tile.val}</div>
               )
             }
           </div>
