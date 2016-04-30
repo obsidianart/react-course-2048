@@ -1,32 +1,45 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  color:#776e65;
+  background: #faf8ef;
 }
 
 h1 {
   text-align: center;
 }
 
-#board {
+#board-frame {
 	width: 500px;
 	height: 500px;
 	padding:10px;
-	margin:0 auto;
 	background-color: #bbada0;
-	color:#776e65;
+	margin:0 auto;
 }
 
-#board .tile {
+#board {
+	position: relative;
+}
+
+.cell,
+.tile {
 	width: 115px;
 	height: 115px;
-	line-height: 115px;
 	display: inline-block;
-	background-color: #eee4da;
-	text-align: center;
+	background-color: rgba(238, 228, 218, 0.35);
 	margin:5px;
 	border-radius: 3px;
-    font-size: 55px;
-    font-weight: bold;
 
+}
+
+.tile {
+	text-align: center;
+	font-size: 55px;
+    font-weight: bold;
+	line-height: 115px;
+	position: absolute;
+	background-color: #eee4da;
+}
+
+.tile.tile-4 {
+	background-color: #ede0c8;
 }

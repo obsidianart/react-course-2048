@@ -9,3 +9,4 @@ To start:
 Steps
 - Step 1: Clone the boilerplate
 - Step 2: draw a board
+- Step 3: add tiles
