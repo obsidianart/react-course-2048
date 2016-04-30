@@ -5,7 +5,30 @@ import React from 'react'
 
 //let yeomanImage = require('../images/yeoman.png')
 
+const KEY_DIRECTIONS = {
+  37: 'LEFT',
+  38: 'UP',
+  39: 'RIGHT',
+  40: 'DOWN'
+}
+
 class AppComponent extends React.Component {
+  handleKeyDown(event) {
+    if (event.keyCode >= 37 && event.keyCode <= 40) {
+      event.preventDefault()
+      console.log("direction", KEY_DIRECTIONS[event.keyCode])
+      //this.setState({board: this.state.board.move(direction)})
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', this.handleKeyDown.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKeyDown.bind(this));
+  }
+
   render() {
     let board = [
       [0,0,0,0],
