@@ -11,3 +11,4 @@ Steps
 - Step 2: draw a board
 - Step 3: add tiles
 - Step 4: add Sass (change the require on top of app.js)
+- Step 5: add keyboard listeners
