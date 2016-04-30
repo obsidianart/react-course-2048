@@ -16,3 +16,4 @@ Steps
 - Step 5: add keyboard listeners
 - Step 6: move tiles to state and add the first movement concept
 - Step 7: time to write a test (failing isolated test for business logic)
+- Step 7: Right movement, no merging

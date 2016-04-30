@@ -17,17 +17,57 @@ class AppComponent extends React.Component {
     super(props)
     this.state = {
       tiles: [
-        {x:2, y:2, val:2, id:1},
-        {x:0, y:0, val:4, id:2}
+        {x:1, y:0, val:2, id:1},
+        {x:0, y:0, val:4, id:2},
+
+        {x:0, y:1, val:2, id:3},
+        {x:2, y:1, val:2, id:4},
+
+        {x:0, y:2, val:2, id:5},
+        {x:2, y:2, val:2, id:6},
+        {x:3, y:2, val:2, id:7},
+
+
+        {x:2, y:3, val:2, id:10}
       ]
     }
   }
 
+  moveRowRight(row) {
+    // let lastAvailablePosition = {}
+    // let sortedRow = row.sort((tileA, tileB) => tileA.x>tileB.x)
+    // sortedRow.map((tile,index) =>
+    //   Object.assign(tile, {x: index})
+    // )
+    // [2,1,0].map((index) => {
+
+    // })
+            // .map(tile => 
+            //   Object.assign(tile, {x: 3})
+            // )
+
+        // let lastAvailablePosition = {}
+    return row
+            .sort((tileA, tileB) => tileA.x>tileB.x)
+            .map((tile,index) =>
+              Object.assign(tile, {x: 3-index})
+            )
+  }
+
   moveTilesRight(state) {
+    let tiles = state.tiles
+    console.log(this.moveRowRight(tiles.filter(tile => tile.y===0)))
     return {
-      tiles:state.tiles.map(tile =>
-        Object.assign({},tile,{x:tile.x+1})
-      )
+      tiles: [
+        ...this.moveRowRight(tiles.filter(tile => tile.y===0)),
+        ...this.moveRowRight(tiles.filter(tile => tile.y===1)),
+        ...this.moveRowRight(tiles.filter(tile => tile.y===2)),
+        ...this.moveRowRight(tiles.filter(tile => tile.y===3))
+      ]
+
+      // state.tiles.map(tile =>
+      //   Object.assign({},tile,{x:tile.x+1})
+      // )
     }
   }
 
@@ -70,7 +110,7 @@ class AppComponent extends React.Component {
             }
             {
               this.state.tiles.map(tile=>
-                <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.x*125, left:tile.y*125}}>{tile.val}</div>
+                <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
               )
             }
           </div>
