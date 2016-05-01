@@ -28,79 +28,89 @@ class AppComponent extends React.Component {
         {x:3, y:2, val:2, id:7},
 
 
-        {x:2, y:3, val:2, id:10}
+        {x:0, y:3, val:2, id:10},
+        {x:1, y:3, val:2, id:11},
+        {x:2, y:3, val:2, id:12},
+        {x:3, y:3, val:2, id:13}
       ]
     }
   }
 
-  moveRowRight(row) {
-    let edge = 3
-    let sortByDirection = (a, b) => b.x - a.x
-    let moveToTheFarEdge = (tile, index) => Object.assign(tile, {x: edge-index}) 
+  moveRow(direction, row) {
+    let edge = ~['DOWN','RIGHT'].indexOf(direction) ? 3 : 0
+    let sortByX = (a, b) => b.x - a.x
+    let sortByY = (a, b) => b.y - a.y
+
+    let moveEachRight = (tile, index) => Object.assign(tile, {x: edge-index}) 
+    let moveEachLeft  = (tile, index) => Object.assign(tile, {x: index}) 
+    let moveEachDown  = (tile, index) => Object.assign(tile, {y: edge-index}) 
+    let moveEachUp    = (tile, index) => Object.assign(tile, {y: index}) 
+
     let hasNotBeenMerged = tile => tile.val != 0
     let mergeIfPossible = (newTiles, tile, index, tiles) => {
       let next = tiles[index+1]
       if (next && tile.val === next.val) {
         next.val = 0
-        newTiles.push(Object.assign(tile, {x: tile.x, val: tile.val*2}))
+        newTiles.push(Object.assign(tile, {x: tile.x, y:tile.y, val: tile.val*2}))
       } else {
         newTiles.push(tile)
       }
       return newTiles
     }
 
-    return row
-            .sort(sortByDirection)
-            .map(moveToTheFarEdge)
-            .reduce(mergeIfPossible, [])
-            .filter(hasNotBeenMerged)
-            .map(moveToTheFarEdge)
+    if (direction === 'RIGHT') {
+      return row
+              .sort(sortByX)
+              .map(moveEachRight)
+              .reduce(mergeIfPossible, [])
+              .filter(hasNotBeenMerged)
+              .map(moveEachRight)
+    }
+
+    if (direction === 'LEFT') {
+      return row
+              .sort(sortByX)
+              .reverse()
+              .map(moveEachLeft)
+              .reduce(mergeIfPossible, [])
+              .filter(hasNotBeenMerged)
+              .map(moveEachLeft)
+    }
+
+    if (direction === 'DOWN') {
+      return row
+              .sort(sortByY)
+              .map(moveEachDown)
+              .reduce(mergeIfPossible, [])
+              .filter(hasNotBeenMerged)
+              .map(moveEachDown)
+    }
+
+    if (direction === 'UP') {
+      return row
+              .sort(sortByY)
+              .reverse()
+              .map(moveEachUp)
+              .reduce(mergeIfPossible, [])
+              .filter(hasNotBeenMerged)
+              .map(moveEachUp)
+    }
   }
 
-  moveRowLeft(row) {
-    let edge = 0
-    let sortByDirection = (a, b) => a.x - b.x
-    let moveToTheFarEdge = (tile, index) => Object.assign(tile, {x: index}) 
-    let hasNotBeenMerged = tile => tile.val != 0
-    let mergeIfPossible = (newTiles, tile, index, tiles) => {
-      let next = tiles[index+1]
-      if (next && tile.val === next.val) {
-        next.val = 0
-        newTiles.push(Object.assign(tile, {x: tile.x, val: tile.val*2}))
-      } else {
-        newTiles.push(tile)
+  moveTiles(direction, state) {
+    let tiles = state.tiles
+    let getRowOrColumn = index => {
+      if (~['LEFT','RIGHT'].indexOf(direction)) {
+        return tiles.filter(tile => tile.y===index)
       }
-      return newTiles
+      return tiles.filter(tile => tile.x===index)
     }
-
-    return row
-            .sort(sortByDirection)
-            .map(moveToTheFarEdge)
-            .reduce(mergeIfPossible, [])
-            .filter(hasNotBeenMerged)
-            .map(moveToTheFarEdge)
-  }
-
-  moveTilesRight(state) {
-    let tiles = state.tiles
     return {
       tiles: [
-        ...this.moveRowRight(tiles.filter(tile => tile.y===0)),
-        ...this.moveRowRight(tiles.filter(tile => tile.y===1)),
-        ...this.moveRowRight(tiles.filter(tile => tile.y===2)),
-        ...this.moveRowRight(tiles.filter(tile => tile.y===3))
-      ]
-    }
-  }
-
-  moveTilesLeft(state) {
-    let tiles = state.tiles
-    return {
-      tiles: [
-        ...this.moveRowLeft(tiles.filter(tile => tile.y===0)),
-        ...this.moveRowLeft(tiles.filter(tile => tile.y===1)),
-        ...this.moveRowLeft(tiles.filter(tile => tile.y===2)),
-        ...this.moveRowLeft(tiles.filter(tile => tile.y===3))
+        ...this.moveRow(direction, getRowOrColumn(0)),
+        ...this.moveRow(direction, getRowOrColumn(1)),
+        ...this.moveRow(direction, getRowOrColumn(2)),
+        ...this.moveRow(direction, getRowOrColumn(3))
       ]
     }
   }
@@ -108,14 +118,8 @@ class AppComponent extends React.Component {
   handleKeyDown(event) {
     if (event.keyCode in KEY_DIRECTIONS) {
       event.preventDefault()
-      let dir = KEY_DIRECTIONS[event.keyCode]
-
-      dir == 'RIGHT' && this.setState(this.moveTilesRight)
-      dir == 'LEFT' && this.setState(this.moveTilesLeft)
-
-      
-      //console.log("direction", KEY_DIRECTIONS[event.keyCode])
-      //this.setState({board: this.state.board.move(direction)})
+      let direction = KEY_DIRECTIONS[event.keyCode]
+      this.setState(this.moveTiles.bind(this, direction))
     }
   }
 
