@@ -34,29 +34,55 @@ class AppComponent extends React.Component {
   }
 
   moveRowRight(row) {
-    // let lastAvailablePosition = {}
-    // let sortedRow = row.sort((tileA, tileB) => tileA.x>tileB.x)
-    // sortedRow.map((tile,index) =>
-    //   Object.assign(tile, {x: index})
-    // )
-    // [2,1,0].map((index) => {
+    let edge = 3
+    let sortByDirection = (a, b) => b.x - a.x
+    let moveToTheFarEdge = (tile, index) => Object.assign(tile, {x: edge-index}) 
+    let hasNotBeenMerged = tile => tile.val != 0
+    let mergeIfPossible = (newTiles, tile, index, tiles) => {
+      let next = tiles[index+1]
+      if (next && tile.val === next.val) {
+        next.val = 0
+        newTiles.push(Object.assign(tile, {x: tile.x, val: tile.val*2}))
+      } else {
+        newTiles.push(tile)
+      }
+      return newTiles
+    }
 
-    // })
-            // .map(tile => 
-            //   Object.assign(tile, {x: 3})
-            // )
-
-        // let lastAvailablePosition = {}
     return row
-            .sort((tileA, tileB) => tileA.x>tileB.x)
-            .map((tile,index) =>
-              Object.assign(tile, {x: 3-index})
-            )
+            .sort(sortByDirection)
+            .map(moveToTheFarEdge)
+            .reduce(mergeIfPossible, [])
+            .filter(hasNotBeenMerged)
+            .map(moveToTheFarEdge)
+  }
+
+  moveRowLeft(row) {
+    let edge = 0
+    let sortByDirection = (a, b) => a.x - b.x
+    let moveToTheFarEdge = (tile, index) => Object.assign(tile, {x: index}) 
+    let hasNotBeenMerged = tile => tile.val != 0
+    let mergeIfPossible = (newTiles, tile, index, tiles) => {
+      let next = tiles[index+1]
+      if (next && tile.val === next.val) {
+        next.val = 0
+        newTiles.push(Object.assign(tile, {x: tile.x, val: tile.val*2}))
+      } else {
+        newTiles.push(tile)
+      }
+      return newTiles
+    }
+
+    return row
+            .sort(sortByDirection)
+            .map(moveToTheFarEdge)
+            .reduce(mergeIfPossible, [])
+            .filter(hasNotBeenMerged)
+            .map(moveToTheFarEdge)
   }
 
   moveTilesRight(state) {
     let tiles = state.tiles
-    console.log(this.moveRowRight(tiles.filter(tile => tile.y===0)))
     return {
       tiles: [
         ...this.moveRowRight(tiles.filter(tile => tile.y===0)),
@@ -64,17 +90,30 @@ class AppComponent extends React.Component {
         ...this.moveRowRight(tiles.filter(tile => tile.y===2)),
         ...this.moveRowRight(tiles.filter(tile => tile.y===3))
       ]
+    }
+  }
 
-      // state.tiles.map(tile =>
-      //   Object.assign({},tile,{x:tile.x+1})
-      // )
+  moveTilesLeft(state) {
+    let tiles = state.tiles
+    return {
+      tiles: [
+        ...this.moveRowLeft(tiles.filter(tile => tile.y===0)),
+        ...this.moveRowLeft(tiles.filter(tile => tile.y===1)),
+        ...this.moveRowLeft(tiles.filter(tile => tile.y===2)),
+        ...this.moveRowLeft(tiles.filter(tile => tile.y===3))
+      ]
     }
   }
 
   handleKeyDown(event) {
     if (event.keyCode in KEY_DIRECTIONS) {
       event.preventDefault()
-      this.setState(this.moveTilesRight)
+      let dir = KEY_DIRECTIONS[event.keyCode]
+
+      dir == 'RIGHT' && this.setState(this.moveTilesRight)
+      dir == 'LEFT' && this.setState(this.moveTilesLeft)
+
+      
       //console.log("direction", KEY_DIRECTIONS[event.keyCode])
       //this.setState({board: this.state.board.move(direction)})
     }
@@ -99,6 +138,9 @@ class AppComponent extends React.Component {
     return (
       <main>
         <h1>2048</h1>
+        <div>{false && this.state.tiles.map(t=>
+          <div>{`x: ${t.x}, y: ${t.y}, val: ${t.val} `}</div>
+        )}</div>
         <div id="board-frame">
           <div id="board">
           	{
@@ -115,6 +157,7 @@ class AppComponent extends React.Component {
             }
           </div>
         </div>
+
       </main>
     )
   }
