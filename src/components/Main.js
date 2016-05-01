@@ -130,7 +130,7 @@ class AppComponent extends React.Component {
   }
 
   render() {
-    let { board, tiles } = this.props.main
+    let { board, tiles } = this.props.game
 
     return (
       <main>

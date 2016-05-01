@@ -1,4 +1,4 @@
-var reducer = require('../../src/reducers/main');
+var reducer = require('../../src/reducers/game');
 
 describe('main', () => {
 
