@@ -18,3 +18,4 @@ Steps
 - Step 7: time to write a test (failing isolated test for business logic)
 - Step 7: Right movement, no merging
 - Step 8: full algorithm
+- Step 9: Adding CSS
