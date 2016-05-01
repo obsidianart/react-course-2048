@@ -13,28 +13,28 @@ const KEY_DIRECTIONS = {
 }
 
 class AppComponent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      tiles: [
-        {x:1, y:0, val:2, id:1},
-        {x:0, y:0, val:4, id:2},
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     tiles: [
+  //       {x:1, y:0, val:2, id:1},
+  //       {x:0, y:0, val:4, id:2},
 
-        {x:0, y:1, val:2, id:3},
-        {x:2, y:1, val:2, id:4},
+  //       {x:0, y:1, val:2, id:3},
+  //       {x:2, y:1, val:2, id:4},
 
-        {x:0, y:2, val:2, id:5},
-        {x:2, y:2, val:2, id:6},
-        {x:3, y:2, val:2, id:7},
+  //       {x:0, y:2, val:2, id:5},
+  //       {x:2, y:2, val:2, id:6},
+  //       {x:3, y:2, val:2, id:7},
 
 
-        {x:0, y:3, val:2, id:10},
-        {x:1, y:3, val:2, id:11},
-        {x:2, y:3, val:2, id:12},
-        {x:3, y:3, val:2, id:13}
-      ]
-    }
-  }
+  //       {x:0, y:3, val:2, id:10},
+  //       {x:1, y:3, val:2, id:11},
+  //       {x:2, y:3, val:2, id:12},
+  //       {x:3, y:3, val:2, id:13}
+  //     ]
+  //   }
+  // }
 
   moveLine(direction, line) {
     let edge = ~['DOWN','RIGHT'].indexOf(direction) ? 3 : 0
@@ -130,19 +130,11 @@ class AppComponent extends React.Component {
   }
 
   render() {
-    let board = [
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0]
-    ]
+    let { board, tiles } = this.props.main
 
     return (
       <main>
         <h1>2048</h1>
-        <div>{false && this.state.tiles.map(t=>
-          <div>{`x: ${t.x}, y: ${t.y}, val: ${t.val} `}</div>
-        )}</div>
         <div id="board-frame">
           <div id="board">
           	{
@@ -153,7 +145,7 @@ class AppComponent extends React.Component {
               )
             }
             {
-              this.state.tiles.map(tile=>
+              tiles.map(tile=>
                 <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
               )
             }
