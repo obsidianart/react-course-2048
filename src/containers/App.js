@@ -34,7 +34,12 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   /* Populated by react-webpack-redux:action */
-  const actions = {};
+  const actions = {
+    moveRight: require('../actions/game/moveRight.js'),
+    moveLeft: require('../actions/game/moveLeft.js'),
+    moveUp: require('../actions/game/moveUp.js'),
+    moveDown: require('../actions/game/moveDown.js')
+  };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;
 }
