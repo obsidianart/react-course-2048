@@ -47,22 +47,20 @@ class AppComponent extends React.Component {
     let moveEachUp    = (tile, index) => Object.assign(tile, {y: index}) 
 
     let hasNotBeenMerged = tile => tile.val != 0
-    let mergeIfPossible = (newTiles, tile, index, tiles) => {
+    let mergeIfPossible = (tile, index, tiles) => {
       let next = tiles[index+1]
       if (next && tile.val === next.val) {
         next.val = 0
-        newTiles.push(Object.assign(tile, {x: tile.x, y:tile.y, val: tile.val*2}))
-      } else {
-        newTiles.push(tile)
+        return Object.assign(tile, {x: tile.x, y:tile.y, val: tile.val*2})
       }
-      return newTiles
+      return tile
     }
 
     if (direction === 'RIGHT') {
       return row
               .sort(sortByX)
               .map(moveEachRight)
-              .reduce(mergeIfPossible, [])
+              .map(mergeIfPossible)
               .filter(hasNotBeenMerged)
               .map(moveEachRight)
     }
@@ -72,7 +70,7 @@ class AppComponent extends React.Component {
               .sort(sortByX)
               .reverse()
               .map(moveEachLeft)
-              .reduce(mergeIfPossible, [])
+              .map(mergeIfPossible)
               .filter(hasNotBeenMerged)
               .map(moveEachLeft)
     }
@@ -81,7 +79,7 @@ class AppComponent extends React.Component {
       return row
               .sort(sortByY)
               .map(moveEachDown)
-              .reduce(mergeIfPossible, [])
+              .map(mergeIfPossible)
               .filter(hasNotBeenMerged)
               .map(moveEachDown)
     }
@@ -91,7 +89,7 @@ class AppComponent extends React.Component {
               .sort(sortByY)
               .reverse()
               .map(moveEachUp)
-              .reduce(mergeIfPossible, [])
+              .map(mergeIfPossible)
               .filter(hasNotBeenMerged)
               .map(moveEachUp)
     }
