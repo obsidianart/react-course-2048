@@ -36,7 +36,7 @@ class AppComponent extends React.Component {
     }
   }
 
-  moveRow(direction, row) {
+  moveLine(direction, line) {
     let edge = ~['DOWN','RIGHT'].indexOf(direction) ? 3 : 0
     let sortByX = (a, b) => b.x - a.x
     let sortByY = (a, b) => b.y - a.y
@@ -57,7 +57,7 @@ class AppComponent extends React.Component {
     }
 
     if (direction === 'RIGHT') {
-      return row
+      return line
               .sort(sortByX)
               .map(moveEachRight)
               .map(mergeIfPossible)
@@ -66,7 +66,7 @@ class AppComponent extends React.Component {
     }
 
     if (direction === 'LEFT') {
-      return row
+      return line
               .sort(sortByX)
               .reverse()
               .map(moveEachLeft)
@@ -76,7 +76,7 @@ class AppComponent extends React.Component {
     }
 
     if (direction === 'DOWN') {
-      return row
+      return line
               .sort(sortByY)
               .map(moveEachDown)
               .map(mergeIfPossible)
@@ -85,7 +85,7 @@ class AppComponent extends React.Component {
     }
 
     if (direction === 'UP') {
-      return row
+      return line
               .sort(sortByY)
               .reverse()
               .map(moveEachUp)
@@ -97,7 +97,7 @@ class AppComponent extends React.Component {
 
   moveTiles(direction, state) {
     let tiles = state.tiles
-    let getRowOrColumn = index => {
+    let getLine = index => {
       if (~['LEFT','RIGHT'].indexOf(direction)) {
         return tiles.filter(tile => tile.y===index)
       }
@@ -105,10 +105,10 @@ class AppComponent extends React.Component {
     }
     return {
       tiles: [
-        ...this.moveRow(direction, getRowOrColumn(0)),
-        ...this.moveRow(direction, getRowOrColumn(1)),
-        ...this.moveRow(direction, getRowOrColumn(2)),
-        ...this.moveRow(direction, getRowOrColumn(3))
+        ...this.moveLine(direction, getLine(0)),
+        ...this.moveLine(direction, getLine(1)),
+        ...this.moveLine(direction, getLine(2)),
+        ...this.moveLine(direction, getLine(3))
       ]
     }
   }
