@@ -1,6 +1,6 @@
 This project has been made for a basic react+redux course.
 
-*This version of the game is not random, you can - in theory - solve it. Every position of the game generates a tile with a specific value in a specific point*
+**This version of the game is not random, you can - in theory - solve it. Every position of the game generates a tile with a specific value in a specific point**
 
 To see this code live http://www.obsidianart.com/projects/2048/ (you can use redux devtool to undo etc)
 
