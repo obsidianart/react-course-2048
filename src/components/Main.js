@@ -2,6 +2,7 @@ require('normalize.css/normalize.css')
 require('styles/App.scss')
 
 import React from 'react'
+import TileComponent from './TileComponent';
 
 //let yeomanImage = require('../images/yeoman.png')
 
@@ -60,7 +61,7 @@ class AppComponent extends React.Component {
             }
             {
               tiles.sort((a,b)=>a.id-b.id).map(tile=>
-                <div className={`tile tile-${tile.val} ` + (tile.new?'new':'') + (tile.merged?'merged':'')} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
+                <TileComponent tile={tile} key={`tile${tile.id}`}/>
               )
             }
           </div>

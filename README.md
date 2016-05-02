@@ -30,3 +30,4 @@ Steps
 - Step 18: Adding logic to add a tile
 - Step 19: Adding game over concept
 - Step 20: Adding new tile animation
+- Step 21: Moving tiles to its own component

@@ -1,0 +1,45 @@
+.cell,
+.tile {
+	width: 115px;
+	height: 115px;
+	display: inline-block;
+	background-color: rgba(238, 228, 218, 0.35);
+	margin:5px;
+	border-radius: 3px;
+	&.new {
+		animation-name: appear_animation;
+		animation-duration: 0.3s;
+		transform-origin:50% 50%;
+		animation-iteration-count: 1;
+		animation-timing-function: easeOutQuart;
+	}
+	&.merged {
+		animation-name: merge_animation;
+		animation-duration: 0.25s;
+		transform-origin:50% 50%;
+		animation-iteration-count: 1;
+		animation-timing-function: easeOut;
+	}
+}
+
+.tile {
+	transition: all 0.2s ease;
+	opacity: 1;
+	text-align: center;
+	font-size: 55px;
+    font-weight: bold;
+	line-height: 115px;
+	position: absolute;
+	background-color: #eee4da;
+	&.tile-4     { background-color: #ede0c8; }
+	&.tile-8     { background-color: #f2b179; color: #f9f6f2; }
+	&.tile-16    { background-color: #f59563; color: #f9f6f2; }
+	&.tile-32    { background-color: #f67c5f; color: #f9f6f2; }
+	&.tile-64    { background-color: #F65F5F; color: #f9f6f2; }
+	&.tile-128   { background-color: #edcf72; color: #f9f6f2; font-size: 45px; }
+	&.tile-256   { background-color: #edcc61; color: #f9f6f2; font-size: 45px; }
+	&.tile-512   { background-color: #edc850; color: #f9f6f2; font-size: 45px; }
+	&.tile-1024  { background-color: #edc53f; color: #f9f6f2; font-size: 35px; }
+	&.tile-2048  { background-color: #edc22e; color: #f9f6f2; font-size: 35px; }
+	&.tile-4096  { background-color: #E6B716; color: #f9f6f2; font-size: 35px; }
+}
