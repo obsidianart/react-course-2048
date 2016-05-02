@@ -26,3 +26,4 @@ Steps
 - Step 14: Animation
 - Step 15: Score
 - Step 16: Redux dev tool
+- Step 17: Moving business logic
