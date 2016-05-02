@@ -1,4 +1,4 @@
-var reducer = require('../../src/reducers/game')
+import reducer from '../../src/reducers/game'
 
 //Parse a board (array of lines) and convert to tiles
 // [["0 0 0 2"],["0 0 0 0"]] => {x:3, y:0, val:2}
