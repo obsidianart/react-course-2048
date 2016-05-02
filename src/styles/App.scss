@@ -1,7 +1,22 @@
 /* Base Application Styles */
+//
+//   I'M KEEPING EVERYTHING IN ONE FILE, THE COURSE ISN'T ABOUT CSS (AND PROBABLY ISN'T WORTH IT ANYWAY FOR NOW)
+//
+
+
 body {
   color:#776e65;
   background: #faf8ef;
+  padding-top:25px;
+}
+
+#info{
+	position: absolute;
+	top:0;
+	left:0;
+	right: 0;
+	padding:5px;
+	text-align: center;
 }
 
 header {
@@ -50,6 +65,21 @@ main {
 	border-radius: 3px;
 }
 
+@keyframes merge_animation {
+	0% { transform: scale(1); }
+	// 40% { transform: scale(1.08); }
+	50% { transform: scale(1.15); }
+	// 60% { transform: scale(1); }
+	// 70% { transform: scale(1.05); }
+	// 80% { transform: scale(1); }
+	100% { transform: scale(1); }
+}
+
+@keyframes appear_animation {
+	0% { transform: scale(0); }
+	100% { transform: scale(1); }
+}
+
 #board {
 	position: relative;
 
@@ -61,7 +91,20 @@ main {
 		background-color: rgba(238, 228, 218, 0.35);
 		margin:5px;
 		border-radius: 3px;
-
+		&.new {
+			animation-name: appear_animation;
+			animation-duration: 0.3s;
+			transform-origin:50% 50%;
+			animation-iteration-count: 1;
+			animation-timing-function: easeOutQuart;
+		}
+		&.merged {
+			animation-name: merge_animation;
+			animation-duration: 0.25s;
+			transform-origin:50% 50%;
+			animation-iteration-count: 1;
+			animation-timing-function: easeOut;
+		}
 	}
 
 	.tile {

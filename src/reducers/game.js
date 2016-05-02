@@ -9,20 +9,7 @@ import { moveTileAndAddNew } from './gameBusiness'
 
 const initialState = {
   tiles: [
-    {x:1, y:0, val:2, id:1},
-    {x:0, y:0, val:4, id:2},
-
-    {x:0, y:1, val:2, id:3},
-    {x:2, y:1, val:2, id:4},
-
-    {x:0, y:2, val:2, id:5},
-    {x:2, y:2, val:2, id:6},
-    {x:3, y:2, val:2, id:7},
-
-    {x:0, y:3, val:2, id:10},
-    {x:1, y:3, val:2, id:11},
-    {x:2, y:3, val:2, id:12},
-    {x:3, y:3, val:2, id:13}
+    {x:1, y:0, val:2, id:1, new:false, merged:false}
   ],
   board: [
     [0,0,0,0],

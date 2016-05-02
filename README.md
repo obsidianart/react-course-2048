@@ -29,3 +29,4 @@ Steps
 - Step 17: Moving business logic
 - Step 18: Adding logic to add a tile
 - Step 19: Adding game over concept
+- Step 20: Adding new tile animation

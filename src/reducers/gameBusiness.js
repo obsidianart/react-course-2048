@@ -33,7 +33,8 @@ let moveLine = (direction, line) => {
   }
 
   let evalauteScore = (score, tile) => score + tile.val
-  let removeMergedFlag = (tile) => Object.assign(tile, {merged: false}) 
+  let removeMergedFlag = tile => Object.assign(tile, {merged: false}) 
+  let removeNewFlag = tile => Object.assign(tile, {new: false}) 
 
 
   let sortByDirection
@@ -63,6 +64,7 @@ let moveLine = (direction, line) => {
   let moves = line
                 .sort(sortByDirection)
                 .map(removeMergedFlag)
+                .map(removeNewFlag)
                 .map(moveEachByDirection)
                 .map(mergeIfPossible)
 
@@ -107,7 +109,7 @@ let getFreeTiles = tiles => {
 
 function getNewTile (state) {
   let freeTiles = getFreeTiles(state.tiles)
-  console.log(freeTiles)
+
   if (freeTiles.length == 0) return false
 
   let selectedTile = freeTiles[0]
@@ -116,6 +118,7 @@ function getNewTile (state) {
     val:2,
     x:selectedTile.x,
     y:selectedTile.y,
+    new: true,
     id:Math.floor(Math.random()*10000000)
   }
 }
@@ -141,7 +144,7 @@ function moveTiles (direction, state) {
 export function moveTileAndAddNew (direction, state) {
   let newState = moveTiles (direction, state)
   let newTile = getNewTile(newState)
-  console.log(newTile)
+
   if (newTile) {
     newState.tiles.push(newTile)
   } else {

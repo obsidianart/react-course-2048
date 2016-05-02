@@ -41,6 +41,7 @@ class AppComponent extends React.Component {
 
     return (
       <main>
+        <div id="info">This has teaching purpouse only(<a href="https://github.com/obsidianart/react-course-2048">code and info here</a>), if you want to play, <a href="https://gabrielecirulli.github.io/2048/" target="_blank">play the original</a></div>
         <header>
           <h1>2048</h1>
           <div className="score-wrapper">
@@ -59,7 +60,7 @@ class AppComponent extends React.Component {
             }
             {
               tiles.sort((a,b)=>a.id-b.id).map(tile=>
-                <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
+                <div className={`tile tile-${tile.val} ` + (tile.new?'new':'') + (tile.merged?'merged':'')} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
               )
             }
           </div>
