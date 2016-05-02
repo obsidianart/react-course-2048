@@ -10,6 +10,9 @@ class AppComponent extends React.Component {
 
   handleKeyDown(event) {
     let { moveDown, moveLeft, moveRight, moveUp } = this.props.actions
+
+    if (this.props.game.gameOver) return;
+
     const KEY_DIRECTIONS = {
       37: 'LEFT',
       38: 'UP',
