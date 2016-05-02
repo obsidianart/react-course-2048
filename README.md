@@ -27,3 +27,5 @@ Steps
 - Step 15: Score
 - Step 16: Redux dev tool
 - Step 17: Moving business logic
+- Step 18: Adding logic to add a tile
+- Step 19: Adding game over concept

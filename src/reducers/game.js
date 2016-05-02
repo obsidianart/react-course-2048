@@ -5,7 +5,7 @@
  */
 
 import { MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN } from './../actions/const';
-import { moveTiles } from './gameBusiness'
+import { moveTileAndAddNew } from './gameBusiness'
 
 const initialState = {
   tiles: [
@@ -30,20 +30,21 @@ const initialState = {
     [0,0,0,0],
     [0,0,0,0]
   ],
-  score:0
+  score:0,
+  gameOver:false
 }
 
 module.exports = function(state = initialState, action) {
   switch(action.type) {
 
     case MOVE_RIGHT:
-      return Object.assign({}, state, moveTiles('RIGHT', state))
+      return Object.assign({}, state, moveTileAndAddNew('RIGHT', state))
     case MOVE_LEFT:
-      return Object.assign({}, state, moveTiles('LEFT', state))
+      return Object.assign({}, state, moveTileAndAddNew('LEFT', state))
     case MOVE_UP:
-      return Object.assign({}, state, moveTiles('UP', state))
+      return Object.assign({}, state, moveTileAndAddNew('UP', state))
     case MOVE_DOWN:
-      return Object.assign({}, state, moveTiles('DOWN', state))
+      return Object.assign({}, state, moveTileAndAddNew('DOWN', state))
 
     default: {
       /* Return original state if no actions were consumed. */

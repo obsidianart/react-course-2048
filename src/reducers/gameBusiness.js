@@ -81,7 +81,46 @@ let moveLine = (direction, line) => {
   }
 }
 
-export  function moveTiles (direction, state) {
+
+let getFreeTiles = tiles => {
+  //We did the system to parse double arrays and flatten yet
+  //We discuss here if isn't worth it, or better to just type it
+  let allTiles = [
+   //xy   xy   xy   xy
+    '00','01','02','03',
+    '10','11','12','13',
+    '20','21','22','23',
+    '30','31','32','33',
+  ]
+
+  let freeTiles ={} 
+
+  //create all tiles as free
+  allTiles.forEach(str=> freeTiles[str] = 1)
+
+  //removing 
+  tiles.forEach(tile=> delete freeTiles[`${tile.x}${tile.y}`])
+
+  //converting to the tile object
+  return Object.keys(freeTiles).map(str=>({x:parseInt(str[0]), y:parseInt(str[1])}))
+}
+
+function getNewTile (state) {
+  let freeTiles = getFreeTiles(state.tiles)
+  console.log(freeTiles)
+  if (freeTiles.length == 0) return false
+
+  let selectedTile = freeTiles[0]
+
+  return {
+    val:2,
+    x:selectedTile.x,
+    y:selectedTile.y,
+    id:Math.floor(Math.random()*10000000)
+  }
+}
+
+function moveTiles (direction, state) {
   let tiles = state.tiles
   let lines = [0,1,2,3]
   let getLine = index => {
@@ -97,4 +136,16 @@ export  function moveTiles (direction, state) {
     ret.score += move.score
     return ret
   }, {tiles:[], score:state.score})
+}
+
+export function moveTileAndAddNew (direction, state) {
+  let newState = moveTiles (direction, state)
+  let newTile = getNewTile(newState)
+  console.log(newTile)
+  if (newTile) {
+    newState.tiles.push(newTile)
+  } else {
+    newState.gameOver = true
+  }
+  return newState
 }
