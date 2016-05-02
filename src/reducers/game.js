@@ -92,7 +92,6 @@ let moveLine = (direction, line) => {
 }
 
 let moveTiles = (direction, state) => {
-  console.log(direction,state)
   let tiles = state.tiles
   let getLine = index => {
     if (~['LEFT','RIGHT'].indexOf(direction)) {
@@ -112,7 +111,7 @@ let moveTiles = (direction, state) => {
 
 module.exports = function(state = initialState, action) {
   switch(action.type) {
-    
+
     case MOVE_RIGHT:
       return Object.assign({},state, moveTiles('RIGHT', state))
     case MOVE_LEFT:

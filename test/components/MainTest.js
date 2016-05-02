@@ -19,7 +19,7 @@ describe('MainComponent', () => {
   })
 
   //Testing business logic for now
-  it.only('should move tiles to the right', () => {
+  it.skip('should move tiles to the right', () => {
   	// Original  =>  Move Right
   	// 1 0 0 0   =>  0 0 0 1
   	// 0 0 0 0   =>  0 0 0 0
