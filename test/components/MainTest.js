@@ -21,7 +21,7 @@ describe('MainComponent', () => {
   //Testing business logic for now
   it.skip('should move tiles to the right', () => {
   	// Original  =>  Move Right
-  	// 1 0 0 0   =>  0 0 0 1
+  	// 2 0 0 0   =>  0 0 0 2
   	// 0 0 0 0   =>  0 0 0 0
   	// 0 0 0 0   =>  0 0 0 0
   	// 0 0 0 0   =>  0 0 0 0
@@ -32,7 +32,7 @@ describe('MainComponent', () => {
   		tiles: original
   	})
 	
-	expect(result.tiles).to.deep.equal([
+	  expect(result.tiles).to.deep.equal([
      	{x:3, y:0, val:2}
     ])
 

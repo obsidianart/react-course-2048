@@ -25,8 +25,6 @@ class AppComponent extends React.Component {
         case 'RIGHT': return moveRight()
         case 'DOWN':  return moveDown()
       }
-
-      //this.setState(this.moveTiles.bind(this, direction))
     }
   }
 
@@ -39,11 +37,17 @@ class AppComponent extends React.Component {
   }
 
   render() {
-    let { board, tiles } = this.props.game
+    let { board, tiles, score } = this.props.game
 
     return (
       <main>
-        <h1>2048</h1>
+        <header>
+          <h1>2048</h1>
+          <div className="score-wrapper">
+            SCORE
+            <div className="score">{score.toFixed()}</div>
+          </div>
+        </header>
         <div id="board-frame">
           <div id="board">
           	{

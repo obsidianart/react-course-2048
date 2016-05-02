@@ -29,84 +29,98 @@ const initialState = {
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0]
-  ]
+  ],
+  score:0
 }
 
 let moveLine = (direction, line) => {
   let edge = ~['DOWN','RIGHT'].indexOf(direction) ? 3 : 0
-  let sortByX = (a, b) => b.x - a.x
-  let sortByY = (a, b) => b.y - a.y
+  let sortByX    = (a, b) => b.x - a.x
+  let sortByXrev = (a, b) => a.x - b.x
+  let sortByY    = (a, b) => b.y - a.y
+  let sortByYrev = (a, b) => a.y - b.y
 
   let moveEachRight = (tile, index) => Object.assign(tile, {x: edge-index}) 
   let moveEachLeft  = (tile, index) => Object.assign(tile, {x: index}) 
   let moveEachDown  = (tile, index) => Object.assign(tile, {y: edge-index}) 
   let moveEachUp    = (tile, index) => Object.assign(tile, {y: index}) 
 
-  let hasNotBeenMerged = tile => tile.val != 0
+  let hasNotBeenMerged = tile => tile.val > 0
+  let hasBeenMerged = tile => tile.val < 0
+
   let mergeIfPossible = (tile, index, tiles) => {
     let next = tiles[index+1]
     if (next && tile.val === next.val) {
-      next.val = 0
+      next.val = -next.val
       return Object.assign(tile, {x: tile.x, y:tile.y, val: tile.val*2})
     }
     return tile
   }
 
+  let evalauteScore = (score, tile) => score + tile.val
+
+
+  let sortByDirection
+  let moveEachByDirection
+
   if (direction === 'RIGHT') {
-    return line
-            .sort(sortByX)
-            .map(moveEachRight)
-            .map(mergeIfPossible)
-            .filter(hasNotBeenMerged)
-            .map(moveEachRight)
+    sortByDirection = sortByX
+    moveEachByDirection = moveEachRight
   }
 
   if (direction === 'LEFT') {
-    return line
-            .sort(sortByX)
-            .reverse()
-            .map(moveEachLeft)
-            .map(mergeIfPossible)
-            .filter(hasNotBeenMerged)
-            .map(moveEachLeft)
+    sortByDirection = sortByXrev
+    moveEachByDirection = moveEachLeft
   }
 
   if (direction === 'DOWN') {
-    return line
-            .sort(sortByY)
-            .map(moveEachDown)
-            .map(mergeIfPossible)
-            .filter(hasNotBeenMerged)
-            .map(moveEachDown)
+    sortByDirection = sortByY
+    moveEachByDirection = moveEachDown
   }
 
   if (direction === 'UP') {
-    return line
-            .sort(sortByY)
-            .reverse()
-            .map(moveEachUp)
-            .map(mergeIfPossible)
-            .filter(hasNotBeenMerged)
-            .map(moveEachUp)
+    sortByDirection = sortByYrev
+    moveEachByDirection = moveEachUp
+  }
+
+  //Move and merge
+  let moves = line
+                .sort(sortByDirection)
+                .map(moveEachByDirection)
+                .map(mergeIfPossible)
+
+  //Remove merged and fill the holes
+  let fullMove = moves
+                .filter(hasNotBeenMerged)
+                .map(moveEachByDirection)
+
+  let mergedScore = moves
+                .filter(hasBeenMerged)
+                .reduce(evalauteScore, 0)
+
+console.log(moves.filter(hasBeenMerged), mergedScore)
+  return {
+    tiles: fullMove,
+    score: Math.abs(mergedScore * 2)
   }
 }
 
 let moveTiles = (direction, state) => {
   let tiles = state.tiles
+  let lines = [0,1,2,3]
   let getLine = index => {
     if (~['LEFT','RIGHT'].indexOf(direction)) {
       return tiles.filter(tile => tile.y===index)
     }
     return tiles.filter(tile => tile.x===index)
   }
-  return {
-    tiles: [
-      ...moveLine(direction, getLine(0)),
-      ...moveLine(direction, getLine(1)),
-      ...moveLine(direction, getLine(2)),
-      ...moveLine(direction, getLine(3))
-    ]
-  }
+  
+  return lines.reduce((ret, line) => { 
+    let move = moveLine(direction, getLine(line))
+    ret.tiles.push(...move.tiles)
+    ret.score += move.score
+    return ret
+  }, {tiles:[], score:state.score})
 }
 
 module.exports = function(state = initialState, action) {

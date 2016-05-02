@@ -4,8 +4,42 @@ body {
   background: #faf8ef;
 }
 
-h1 {
-  text-align: center;
+header {
+	padding: 20px 0;
+	&:after {
+		content:'';
+		clear:both;
+		display: block;
+	}
+	h1 {
+	  text-align: left;
+	  font-size:70px;
+	  float:left;
+	  width: 50%;
+	  margin:0;
+	}
+
+	.score-wrapper {
+		border-radius: 3px;
+		background-color: #bbada0;
+		color:white;
+		padding:8px 20px;
+		float:left;
+		font-size: 13px;
+		color:#eee4da;
+		text-align: center;
+		position: relative;
+		top: 8px;
+		.score {
+			color:white;
+			font-size:26px;
+		}
+	}
+}
+
+main {
+	width: 500px;
+	margin:0 auto;
 }
 
 #board-frame {
@@ -13,7 +47,6 @@ h1 {
 	height: 500px;
 	padding:10px;
 	background-color: #bbada0;
-	margin:0 auto;
 	border-radius: 3px;
 }
 

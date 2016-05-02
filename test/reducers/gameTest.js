@@ -22,7 +22,7 @@ let stringToTiles = (strGameArray) => {
 //Parse 2 boards and return the separately
 // "board A => board B"
 // "0 0 2 0 => 0 0 0 2"
-//return {start:[{x:2,y:0, val:0}], end:[{x:3,y:0, val:0}]}
+//return {start:[{x:2,y:0, val:2}], end:[{x:3,y:0, val:2}]}
 let parseTransition = (strGame) => {
 	var games = strGame
 			.split(/ => |\n/)
