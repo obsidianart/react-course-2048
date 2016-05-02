@@ -49,12 +49,12 @@ class AppComponent extends React.Component {
           	{
               board.map((line,x)=>
                 line.map((cell,y)=>
-                  <div className="cell" key={'cell' + x + y}>{x}{y}</div>
+                  <div className="cell" key={'cell' + x + y}>&nbsp;</div>
                 )
               )
             }
             {
-              tiles.map(tile=>
+              tiles.sort((a,b)=>a.id-b.id).map(tile=>
                 <div className={`tile tile-${tile.val}`} key={`tile${tile.id}`} style={{top:tile.y*125, left:tile.x*125}}>{tile.val}</div>
               )
             }

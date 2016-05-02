@@ -23,3 +23,4 @@ Steps
 - Step 11: Moving state to reducer (breakes the game)
 - Step 12: Creating actions, dispatching, moving business logic (game is back)
 - Step 13: Testing the game logic in the reducer
+- Step 14: Animation
