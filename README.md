@@ -22,3 +22,4 @@ Steps
 - Step 10: Adding reducer yo react-webpack-redux:reducer main
 - Step 11: Moving state to reducer (breakes the game)
 - Step 12: Creating actions, dispatching, moving business logic (game is back)
+- Step 13: Testing the game logic in the reducer
