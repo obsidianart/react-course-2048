@@ -1,5 +1,7 @@
 var reducer = require('../../src/reducers/game')
 
+//Parse a board (array of lines) and convert to tiles
+// [["0 0 0 2"],["0 0 0 0"]] => {x:3, y:0, val:2}
 let stringToTiles = (strGameArray) => {
 	return strGameArray
 		    .map((line, y) =>
@@ -17,6 +19,10 @@ let stringToTiles = (strGameArray) => {
 		    },[])
 }
 
+//Parse 2 boards and return the separately
+// "board A => board B"
+// "0 0 2 0 => 0 0 0 2"
+//return {start:[{x:2,y:0, val:0}], end:[{x:3,y:0, val:0}]}
 let parseTransition = (strGame) => {
 	var games = strGame
 			.split(/ => |\n/)
@@ -37,6 +43,34 @@ let parseTransition = (strGame) => {
 	}
 }
 
+//Execute a move and expect a result, as described in the game (check tests to understand)
+let executedMoveAndExpect = (action, game) => {
+	return new Promise((resolve, reject) => {
+		//Order of result is not important, sorting all tiles by value first
+		let byValue = (a,b) => a.val - b.val
+
+	  	var tiles = parseTransition(game)
+
+	  	const state = Object.freeze({
+	  		tiles:tiles.start.sort(byValue)
+	  	})
+
+	  	let newState = reducer(state, {type: action})
+		
+		//newState.tiles.map(console.log.bind(console))
+
+		expect(newState.tiles.sort(byValue)).to.deep.equal(tiles.end.sort(byValue))
+
+
+	    resolve()
+	})
+}
+
+let executedMoveRightAndExpect = game => executedMoveAndExpect('MOVE_RIGHT', game)
+let executedMoveLeftAndExpect = game => executedMoveAndExpect('MOVE_LEFT', game)
+let executedMoveUpAndExpect = game => executedMoveAndExpect('MOVE_UP', game)
+let executedMoveDownAndExpect = game => executedMoveAndExpect('MOVE_DOWN', game)
+
 
 describe('main', () => {
 
@@ -46,25 +80,137 @@ describe('main', () => {
     done()
   })
 
-  it('should move the game Right', done => {
-
-  	var tiles = parseTransition(
+  it('should move the game right', done => {
+  	executedMoveRightAndExpect(
   	 // Original => Move Right
   		`2 0 0 0 => 0 0 0 2
   		 0 0 0 0 => 0 0 0 0
   		 0 0 0 0 => 0 0 0 0
   		 0 0 0 0 => 0 0 0 0`
-  	)
+  	).then(done).catch(done)
+  })
 
-  	const state = Object.freeze({
-  		tiles:tiles.start
-  	})
+  it('should move the game right for every line', done => {
+  	executedMoveRightAndExpect(
+  	 // Original => Move Right
+  		`2 0 0 0  => 0 0 0 2
+  		 4 0 0 0  => 0 0 0 4
+  		 8 0 0 0  => 0 0 0 8
+  		 16 0 0 0 => 0 0 0 16`
+  	).then(done).catch(done)
+  })
 
-  	
-  	let newState = reducer(state, {type: 'MOVE_RIGHT'})
-	
-	expect(newState.tiles).to.deep.equal(tiles.end)
+  it('should merge right when possible', done => {
+  	executedMoveRightAndExpect(
+  	 // Original => Move Right
+  		`2 2 0 0   => 0 0 0 4
+  		 4 4 0 0   => 0 0 0 8
+  		 8 8 0 0   => 0 0 0 16
+  		 16 16 0 0 => 0 0 0 32`
+  	).then(done).catch(done)
+  })
 
-    done()
+
+  it('should not merge right when values are different', done => {
+  	executedMoveRightAndExpect(
+  	 // Original => Move Right
+  		`2 4 0 0   => 0 0 2 4
+  		 4 8 0 0   => 0 0 4 8
+  		 8 16 0 0  => 0 0 8 16
+  		 16 32 0 0 => 0 0 16 32`
+  	).then(done).catch(done)
+  })
+
+
+  it('should move the game Left', done => {
+  	executedMoveLeftAndExpect(
+  	 // Original => Move Left
+  		`2 0 0 0 => 2 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0`
+  	).then(done).catch(done)
+  })
+
+  it('should move the game Left for every line', done => {
+  	executedMoveLeftAndExpect(
+  	 // Original => Move Left
+  		`0 2 0 0  => 2 0 0 0
+  		 0 4 0 0  => 4 0 0 0
+  		 0 8 0 0  => 8 0 0 0
+  		 0 16 0 0 => 16 0 0 0`
+  	).then(done).catch(done)
+  })
+
+  it('should merge Left when possible', done => {
+  	executedMoveLeftAndExpect(
+  	 // Original => Move Left
+  		`2 2 0 0   => 4 0 0 0
+  		 4 4 0 0   => 8 0 0 0
+  		 8 8 0 0   => 16 0 0 0
+  		 16 16 0 0 => 32 0 0 0`
+  	).then(done).catch(done)
+  })
+
+
+  it('should move the game Down', done => {
+  	executedMoveDownAndExpect(
+  	 // Original => Move Down
+  		`2 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 2 0 0 0`
+  	).then(done).catch(done)
+  })
+
+  it('should move the game Down for every line', done => {
+  	executedMoveDownAndExpect(
+  	 // Original => Move Down
+  		`2 4 8 8 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 2 4 8 8`
+  	).then(done).catch(done)
+  })
+
+  it('should merge Down when possible', done => {
+  	executedMoveDownAndExpect(
+  	 // Original => Move Down
+  		`2 4 8 16 => 0 0 0 0
+  		 2 4 8 16 => 0 0 0 0
+  		 0 0 0 0  => 0 0 0 0
+  		 0 0 0 0  => 4 8 16 32`
+  	).then(done).catch(done)
+  })
+
+
+  it('should move the game Up', done => {
+  	executedMoveUpAndExpect(
+  	 // Original => Move Up
+  		`0 0 0 0 => 2 0 0 0
+  		 0 0 0 0 => 0 0 0 0
+  		 2 0 0 0 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0`
+  	).then(done).catch(done)
+  })
+
+  it('should move the game Up for every line', done => {
+  	executedMoveUpAndExpect(
+  	 // Original => Move Up
+  		`0 0 0 0 => 2 4 8 8
+  		 0 0 0 0 => 0 0 0 0
+  		 2 4 8 8 => 0 0 0 0
+  		 0 0 0 0 => 0 0 0 0`
+  	).then(done).catch(done)
+  })
+
+  it('should merge Up when possible', done => {
+  	executedMoveUpAndExpect(
+  	 // Original => Move Up
+  		`2 4 8 16 => 4 8 16 32
+  		 2 4 8 16 => 0 0 0 0
+  		 0 0 0 0  => 0 0 0 0
+  		 0 0 0 0  => 0 0 0 0`
+  	).then(done).catch(done)
   })
 })
