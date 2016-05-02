@@ -33,7 +33,6 @@ module.exports = function(state = initialState, action) {
     case MOVE_DOWN:
       return Object.assign({}, state, moveTileAndAddNew('DOWN', state))
     case NEW_GAME:
-      console.log("new game")
       return Object.assign({}, initialState)
     default: {
       /* Return original state if no actions were consumed. */
