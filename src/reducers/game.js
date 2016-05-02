@@ -98,7 +98,6 @@ let moveLine = (direction, line) => {
                 .filter(hasBeenMerged)
                 .reduce(evalauteScore, 0)
 
-console.log(moves.filter(hasBeenMerged), mergedScore)
   return {
     tiles: fullMove,
     score: Math.abs(mergedScore * 2)
