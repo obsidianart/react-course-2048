@@ -40,24 +40,29 @@ let moveLine = (direction, line) => {
   let sortByY    = (a, b) => b.y - a.y
   let sortByYrev = (a, b) => a.y - b.y
 
-  let moveEachRight = (tile, index) => Object.assign(tile, {x: edge-index}) 
-  let moveEachLeft  = (tile, index) => Object.assign(tile, {x: index}) 
-  let moveEachDown  = (tile, index) => Object.assign(tile, {y: edge-index}) 
-  let moveEachUp    = (tile, index) => Object.assign(tile, {y: index}) 
+  let moveEachRight = (tile, index) => Object.assign({}, tile, {x: edge-index}) 
+  let moveEachLeft  = (tile, index) => Object.assign({}, tile, {x: index}) 
+  let moveEachDown  = (tile, index) => Object.assign({}, tile, {y: edge-index}) 
+  let moveEachUp    = (tile, index) => Object.assign({}, tile, {y: index}) 
 
   let hasNotBeenMerged = tile => tile.val > 0
   let hasBeenMerged = tile => tile.val < 0
 
   let mergeIfPossible = (tile, index, tiles) => {
     let next = tiles[index+1]
+    let prev = tiles[index-1]
+
+    if (prev && prev.merged) {
+      return Object.assign({}, tile, {val: -tile.val})
+    }
     if (next && tile.val === next.val) {
-      next.val = -next.val
-      return Object.assign(tile, {x: tile.x, y:tile.y, val: tile.val*2})
+      return Object.assign({}, tile, {x: tile.x, y:tile.y, val: tile.val*2, merged:true})
     }
     return tile
   }
 
   let evalauteScore = (score, tile) => score + tile.val
+  let removeMergedFlag = (tile) => Object.assign({}, tile, {merged: false}) 
 
 
   let sortByDirection
@@ -86,6 +91,7 @@ let moveLine = (direction, line) => {
   //Move and merge
   let moves = line
                 .sort(sortByDirection)
+                .map(removeMergedFlag)
                 .map(moveEachByDirection)
                 .map(mergeIfPossible)
 
@@ -126,13 +132,13 @@ module.exports = function(state = initialState, action) {
   switch(action.type) {
 
     case MOVE_RIGHT:
-      return Object.assign({},state, moveTiles('RIGHT', state))
+      return Object.assign({}, state, moveTiles('RIGHT', state))
     case MOVE_LEFT:
-      return Object.assign({},state, moveTiles('LEFT', state))
+      return Object.assign({}, state, moveTiles('LEFT', state))
     case MOVE_UP:
-      return Object.assign({},state, moveTiles('UP', state))
+      return Object.assign({}, state, moveTiles('UP', state))
     case MOVE_DOWN:
-      return Object.assign({},state, moveTiles('DOWN', state))
+      return Object.assign({}, state, moveTiles('DOWN', state))
 
     default: {
       /* Return original state if no actions were consumed. */

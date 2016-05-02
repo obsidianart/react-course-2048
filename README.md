@@ -25,3 +25,4 @@ Steps
 - Step 13: Testing the game logic in the reducer
 - Step 14: Animation
 - Step 15: Score
+- Step 16: Redux dev tool
