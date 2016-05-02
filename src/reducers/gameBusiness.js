@@ -141,6 +141,17 @@ function moveTiles (direction, state) {
   }, {tiles:[], score:state.score})
 }
 
+function isThereAnAvailableMove(state) {
+  //Not optimized, just try all available moves
+  const TOTAL_TILES = 4*4
+
+  if (moveTiles('UP', state).tiles.length    !== TOTAL_TILES) return true
+  if (moveTiles('DOWN', state).tiles.length  !== TOTAL_TILES) return true
+  if (moveTiles('LEFT', state).tiles.length  !== TOTAL_TILES) return true
+  if (moveTiles('RIGHT', state).tiles.length !== TOTAL_TILES) return true
+  return false
+}
+
 export function moveTileAndAddNew (direction, state) {
   let newState = moveTiles (direction, state)
   let newTile = getNewTile(newState)
@@ -148,7 +159,9 @@ export function moveTileAndAddNew (direction, state) {
   if (newTile) {
     newState.tiles.push(newTile)
   } else {
-    newState.gameOver = true
+    if (!isThereAnAvailableMove(state)) {
+      newState.gameOver = true
+    }
   }
   return newState
 }
