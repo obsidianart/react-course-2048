@@ -34,3 +34,4 @@ Steps
 - Step 22: Game Over Screen (Trigger by invalid move not by "no more moves")
 - Step 23: Real game over
 - Step 24: Deciding where next tile goes
+- Step 25: new game button

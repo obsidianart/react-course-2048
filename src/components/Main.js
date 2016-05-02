@@ -7,7 +7,6 @@ import TileComponent from './TileComponent';
 //let yeomanImage = require('../images/yeoman.png')
 
 class AppComponent extends React.Component {
-
   handleKeyDown(event) {
     let { moveDown, moveLeft, moveRight, moveUp } = this.props.actions
 
@@ -40,6 +39,10 @@ class AppComponent extends React.Component {
     window.removeEventListener('keydown', this.handleKeyDown.bind(this));
   }
 
+  startNewGame() {
+    this.props.actions.newGame()
+  }
+
   render() {
     let { board, tiles, score, gameOver } = this.props.game
 
@@ -48,7 +51,10 @@ class AppComponent extends React.Component {
         <div id="info">This has teaching purpouse only(<a href="https://github.com/obsidianart/react-course-2048">code and info here</a>), if you want to play, <a href="https://gabrielecirulli.github.io/2048/" target="_blank">play the original</a></div>
         <header>
           <h1>2048</h1>
-          <div className="score-wrapper">
+          <div id="restart" onClick={this.startNewGame.bind(this)}>
+            RESTART
+          </div>
+          <div id="score-wrapper">
             SCORE
             <div className="score">{score.toFixed()}</div>
           </div>

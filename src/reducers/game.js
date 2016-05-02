@@ -4,7 +4,7 @@
  * src/container/App.js accordingly.
  */
 
-import { MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN } from './../actions/const';
+import { MOVE_RIGHT, MOVE_LEFT, MOVE_UP, MOVE_DOWN, NEW_GAME } from './../actions/const';
 import { moveTileAndAddNew } from './gameBusiness'
 
 const initialState = {
@@ -32,7 +32,9 @@ module.exports = function(state = initialState, action) {
       return Object.assign({}, state, moveTileAndAddNew('UP', state))
     case MOVE_DOWN:
       return Object.assign({}, state, moveTileAndAddNew('DOWN', state))
-
+    case NEW_GAME:
+      console.log("new game")
+      return Object.assign({}, initialState)
     default: {
       /* Return original state if no actions were consumed. */
       return state

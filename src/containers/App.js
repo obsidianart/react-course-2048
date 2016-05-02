@@ -38,7 +38,8 @@ function mapDispatchToProps(dispatch) {
     moveRight: require('../actions/game/moveRight.js'),
     moveLeft: require('../actions/game/moveLeft.js'),
     moveUp: require('../actions/game/moveUp.js'),
-    moveDown: require('../actions/game/moveDown.js')
+    moveDown: require('../actions/game/moveDown.js'),
+    newGame: require('../actions/game/newGame.js')
   };
   const actionMap = { actions: bindActionCreators(actions, dispatch) };
   return actionMap;

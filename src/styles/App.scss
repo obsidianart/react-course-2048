@@ -20,7 +20,7 @@ body {
 }
 
 header {
-	padding: 20px 0;
+	padding: 20px 0 0px;
 	&:after {
 		content:'';
 		clear:both;
@@ -30,25 +30,42 @@ header {
 	  text-align: left;
 	  font-size:70px;
 	  float:left;
-	  width: 50%;
+	  width: 205px;
 	  margin:0;
 	}
 
-	.score-wrapper {
+	#score-wrapper {
 		border-radius: 3px;
 		background-color: #bbada0;
 		color:white;
 		padding:8px 20px;
-		float:left;
+		float:right;
 		font-size: 13px;
 		color:#eee4da;
 		text-align: center;
 		position: relative;
 		top: 8px;
+		right: -20px;
 		.score {
 			color:white;
 			font-size:26px;
 		}
+	}
+
+	#restart {
+	    background: #8f7a66;
+	    border-radius: 3px;
+	    padding: 0 20px;
+	    text-decoration: none;
+	    color: #f9f6f2;
+	    height: 40px;
+	    line-height: 42px;
+	    cursor: pointer;
+	    display: block;
+	    text-align: center;
+	    position: relative;
+	    float:left;
+	    top:29px;
 	}
 }
 
