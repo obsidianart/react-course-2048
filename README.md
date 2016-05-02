@@ -36,3 +36,5 @@ Steps
 - Step 24: Deciding where next tile goes
 - Step 25: Restart button
 - Step 26: Fix test (yeah, I should have done it earlier...)
+- Step 27: Adding not on non implemented test
+- Step 28: Generating different values of tiles

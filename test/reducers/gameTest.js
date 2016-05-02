@@ -182,7 +182,7 @@ describe('main', () => {
   	executedMoveDownAndExpect(
   	 // Original => Move Down
   		`2 4 8 8 => 0 0 0 0
-  		 0 0 0 0 => 0 0 2 0
+  		 0 0 0 0 => 0 0 4 0
   		 0 0 0 0 => 0 0 0 0
   		 0 0 0 0 => 2 4 8 8`
   	).then(done).catch(done)
@@ -227,5 +227,9 @@ describe('main', () => {
   		 0 0 0 0  => 0 0 0 0
   		 0 0 0 0  => 0 0 0 0`
   	).then(done).catch(done)
+  })
+
+  it.skip('should say game over when no available moves', done => {
+    //Check game.gameOver after trying to move on a finished game
   })
 })

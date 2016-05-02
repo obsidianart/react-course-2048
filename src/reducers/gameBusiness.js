@@ -135,11 +135,17 @@ function getNewTile (state) {
 
   if (freeTilesCount == 0) return false
 
-  let nextTileIndex = getNumberFromPosition(state.tiles)%freeTilesCount
+  let currentPositionHash = getNumberFromPosition(state.tiles)
+console.log("currentPositionHash", currentPositionHash)
+  let nextTileIndex = currentPositionHash%freeTilesCount
   let selectedTile = freeTiles[nextTileIndex]
+  let newValue = 2
+  if (currentPositionHash % 10 == 0) { newValue = 4  }
+  if (currentPositionHash % 50 == 0) { newValue = 8  }
+  if (currentPositionHash % 111 == 0){ newValue = 16 }
 
   return {
-    val:2,
+    val:newValue,
     x:selectedTile.x,
     y:selectedTile.y,
     new: true,
