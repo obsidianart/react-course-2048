@@ -67,11 +67,7 @@ main {
 
 @keyframes merge_animation {
 	0% { transform: scale(1); }
-	// 40% { transform: scale(1.08); }
 	50% { transform: scale(1.15); }
-	// 60% { transform: scale(1); }
-	// 70% { transform: scale(1.05); }
-	// 80% { transform: scale(1); }
 	100% { transform: scale(1); }
 }
 
@@ -82,4 +78,17 @@ main {
 
 #board {
 	position: relative;
+}
+
+#game-over {
+	position: absolute;
+	text-align: center;
+	font-weight: bold;
+	font-size: 60px;
+	top:-10px;
+	bottom: -10px;
+	right: -10px;
+	left: -10px;
+	padding-top:225px;
+	background-color: rgba(250, 248, 239, 0.2);
 }

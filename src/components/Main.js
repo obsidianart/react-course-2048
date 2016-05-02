@@ -38,7 +38,7 @@ class AppComponent extends React.Component {
   }
 
   render() {
-    let { board, tiles, score } = this.props.game
+    let { board, tiles, score, gameOver } = this.props.game
 
     return (
       <main>
@@ -64,7 +64,9 @@ class AppComponent extends React.Component {
                 <TileComponent tile={tile} key={`tile${tile.id}`}/>
               )
             }
+            {gameOver && <div id="game-over">GAME OVER</div>}
           </div>
+
         </div>
 
       </main>
