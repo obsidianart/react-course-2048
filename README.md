@@ -32,3 +32,4 @@ Steps
 - Step 20: Adding new tile animation
 - Step 21: Moving tiles to its own component
 - Step 22: Game Over Screen (Trigger by invalid move not by "no more moves")
+- Step 23: Real game over
