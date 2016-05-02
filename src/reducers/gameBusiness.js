@@ -1,5 +1,18 @@
 /*Game business logic functions*/
 
+//If you are reading this thinking "Oh my god the complexity is crazy"
+//I totally agree with you
+//Speed is not the point of this algorithm, this was about teaching concepts
+//Will I update this to be faster?
+//No
+//Why?
+//Because this is actually really fast anyway, and if I will add something it
+//will be something with user value, like a nice animation.
+//But I want to write a better algo
+//Feel free, if it pass the tests it's good. I'll tell you more, if speed is
+//relevant you can solvethis game with O(1), they are very few cases in total :)
+//P.S. big O notation have different interpretation, if you count operations it can't be 1
+
 let moveLine = (direction, line) => {
   let edge = ~['DOWN','RIGHT'].indexOf(direction) ? 3 : 0
   let sortByX    = (a, b) => b.x - a.x
@@ -92,7 +105,7 @@ let getFreeTiles = tiles => {
     '00','01','02','03',
     '10','11','12','13',
     '20','21','22','23',
-    '30','31','32','33',
+    '30','31','32','33'
   ]
 
   let freeTiles ={} 
@@ -107,12 +120,23 @@ let getFreeTiles = tiles => {
   return Object.keys(freeTiles).map(str=>({x:parseInt(str[0]), y:parseInt(str[1])}))
 }
 
+//I need to get a number from the current position
+//I use this number to decide how to place next tile
+//I can't place at random or state will be unpredictable
+function getNumberFromPosition(tiles) {
+  return tiles.reduce((total, tile)=>{
+    return total + tile.x + tile.y + tile.val
+  },0)
+}
+
 function getNewTile (state) {
   let freeTiles = getFreeTiles(state.tiles)
+  let freeTilesCount = freeTiles.length
 
-  if (freeTiles.length == 0) return false
+  if (freeTilesCount == 0) return false
 
-  let selectedTile = freeTiles[0]
+  let nextTileIndex = getNumberFromPosition(state.tiles)%freeTilesCount
+  let selectedTile = freeTiles[nextTileIndex]
 
   return {
     val:2,
@@ -143,6 +167,7 @@ function moveTiles (direction, state) {
 
 function isThereAnAvailableMove(state) {
   //Not optimized, just try all available moves
+  //And yes, V8 can handle this easily on a 4x4
   const TOTAL_TILES = 4*4
 
   if (moveTiles('UP', state).tiles.length    !== TOTAL_TILES) return true
