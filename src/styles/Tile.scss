@@ -1,3 +1,14 @@
+@keyframes merge_animation {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.15); }
+	100% { transform: scale(1); }
+}
+
+@keyframes appear_animation {
+	0% { transform: scale(0); }
+	100% { transform: scale(1); }
+}
+
 .cell,
 .tile {
 	width: 115px;
