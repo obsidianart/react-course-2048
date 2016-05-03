@@ -136,7 +136,7 @@ function getNewTile (state) {
   if (freeTilesCount == 0) return false
 
   let currentPositionHash = getNumberFromPosition(state.tiles)
-console.log("currentPositionHash", currentPositionHash)
+
   let nextTileIndex = currentPositionHash%freeTilesCount
   let selectedTile = freeTiles[nextTileIndex]
   let newValue = 2
@@ -165,7 +165,7 @@ function moveTiles (direction, state) {
   
   return lines.reduce((ret, line) => { 
     let move = moveLine(direction, getLine(line))
-    ret.tiles.push(...move.tiles)
+    ret.tiles.push(...move.tiles) //flattern back
     ret.score += move.score
     return ret
   }, {tiles:[], score:state.score})
