@@ -1,10 +1,12 @@
-This project has been made for a basic react+redux course.
-
 **This version of the game is not random, you can - in theory - solve it. Every position of the game generates a tile with a specific value in a specific point**
 
-To see this code live http://www.obsidianart.com/projects/2048/ (you can use redux devtool to undo etc)
+This project has been made to teach in a react+redux workshop, it is not production ready and some choices are to illustrate a functionality even if not the "best".
 
-Based on a boilerplate https://github.com/stylesuxx/generator-react-webpack-redux
+To play with this code http://www.obsidianart.com/projects/2048/ (you can use redux devtool to undo etc)
+
+![alt text](doc/demo.gif "Gameplay example")
+
+
 
 To start:
 - npm start
@@ -16,7 +18,7 @@ Build (go to /dist)
 - npm run copy & webpack --env=dist
 
 Steps
-- Step 1: Clone the boilerplate
+- Step 1: Clone the boilerplate (https://github.com/stylesuxx/generator-react-webpack-redux)
 - Step 2: draw a board
 - Step 3: add tiles
 - Step 4: add Sass (change the require on top of app.js)
