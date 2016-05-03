@@ -12,6 +12,9 @@ To start:
 Test and coverage:
 - npm test
 
+Build (go to /dist)
+- npm run copy & webpack --env=dist
+
 Steps
 - Step 1: Clone the boilerplate
 - Step 2: draw a board
